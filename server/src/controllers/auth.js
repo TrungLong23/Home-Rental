@@ -1,6 +1,7 @@
 import * as authService from '../services/auth'
 
 export const register = async (req, res) => {
+
     const { name, phone, password } = req.body
     try {
         if (!name || !phone || !password) return res.status(400).json({
