@@ -16,6 +16,10 @@ npm i --save-dev sequelize-cli
 
 #9 
 npm i bcryptjs jsonwebtoken
-npm install --save-dev @babel/preset-env(khong co trong)
+npm install --save-dev @babel/preset-env(khong co trong video)
 #10
 npm install react-scripts(ko co trong video)
+npm install eslint-plugin-react-hooks@next(khong co trong video)
+
+#11
+npm i redux-thunk (client)
