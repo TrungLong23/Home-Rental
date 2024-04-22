@@ -8,6 +8,11 @@ export const path = {
     
 }
 
+export const text = {
+    HOMe_TITLE: 'Chất lượng và tiện nghi - nhà thuê tốt nhất',
+    HOME_DESCRIPTION: "Kênh thông tin Phòng Trọ Việt Nam - Website đăng tin cho thuê phòng trọ, nhà nguyên căn, căn hộ, ở ghép nhanh, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng."
+}
+
 export const formatVietnameseToString = (keyword) => {
     return keyword
         .toLowerCase()
