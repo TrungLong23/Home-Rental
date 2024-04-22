@@ -14,7 +14,7 @@ const Search = () => {
       <SearchItem IconBefore={<RiCrop2Line />}IconAfter={<BsChevronRight color='rgb(156, 163, 175)'/>} text='Chọn diện tích'/>
       <button
       type='button'
-      className='outline-none py-2 px-4 flex-1 bg-secondary1 text-[13.3px] flex items-center justify-center gap-2 text-white font-medium'
+      className='outline-none py-2 px-4 w-full bg-secondary text-[13.3px] flex items-center justify-center gap-2 text-white font-medium'
       >
         <FiSearch />
         Tìm kiếm
