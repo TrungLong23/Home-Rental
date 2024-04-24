@@ -7,3 +7,4 @@ router.post('/', inserController.insert)
 
 export default router 
 
+    

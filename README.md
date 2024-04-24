@@ -25,4 +25,4 @@ npm install eslint-plugin-react-hooks@next(khong co trong video)
 npm i redux-thunk (client)
 
 #14 15
-npm i sweetalert2
+npm i sweetalert2 (client)

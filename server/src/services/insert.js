@@ -7,6 +7,7 @@ import chothuematbang from '../../data/chothuematbang.json'
 import chothuephongtro from'../../data/chothuephongtro.json'
 import nhachothue from '../../data/nhachothue.json'
 import generateCode from '../ultis/generateCode'
+import { where } from 'sequelize'
 require('dotenv').config()
 const dataBody = chothuephongtro.body
 
@@ -16,10 +17,11 @@ export const insertService = () => new Promise(async (resolve, reject) => {
     try {
             dataBody.forEach(async (item) => {
                 let postId = v4()
-                let labelCode = generateCode(4)
+                let labelCode = generateCode(item?.header?.class?.classType)
                 let attributesId = v4()
                 let userId = v4()
                 let imagesId = v4()
+                let desc = JSON.stringify(item?.mainContent?.content)
                 let overviewId = v4()
                 await db.Post.create({
                     id: postId,
@@ -29,10 +31,15 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                     address: item?.header?.address,
                     attributesId,
                     categoryCode: 'CTPT',
-                    description: JSON.stringify(item?.mainContent?.content),
-                    userId: item.userId,
+                    description: desc,
+                    userId,
                     overviewId,
-                    imagesId
+                    imagesId,
+                    // areaCode: dataArea.find(area => area.max > currentArea && area.min <= currentArea)?.code,
+                    // priceCode: dataPrice.find(area => area.max > currentPrice && area.min <= currentPrice)?.code,
+                    // provinceCode,
+                    // priceNumber: getNumberFromStringV2(item?.header?.attributes?.price),
+                    // areaNumber: getNumberFromStringV2(item?.header?.attributes?.acreage)
                 })
                   await db.Attribute.create({
                     id: attributesId,
@@ -45,10 +52,15 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                     id: imagesId,
                     image: JSON.stringify(item?.images)
                 })
-                await db.Label.create({
-                    code: labelCode,
-                    value: item?.header?.class?.classType
-                })
+                await db.Label.findOrCreate(
+                    {
+                        where : {code: labelCode},
+                        defaults: {
+                            code: labelCode,
+                            value: item?.header?.class?.classType
+                        }
+                    }
+                )
                 await db.Overview.create({
                     id: overviewId,
                     code: item?.overview?.content.find(i => i.name === "Mã tin:")?.content,
