@@ -1,11 +1,9 @@
-import React, { memo } from 'react'
-import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
+import React, {memo} from 'react'
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 
-//Huyền cop hết cả file này từ file gốc rồi, đừng có sửa gì file này hết
-
-const notActive = 'w-[46px] h-[48px] flex justify-center items-center bg-white hover:bg-gray-300 rounded-md'
-const active = 'w-[46px] h-[48px] flex justify-center items-center bg-[#E13427] text-white hover:opacity-90 rounded-md'
+const notActive = 'w-[46px] h-[48px] flex justify-center items-center bg-white hover:bg-gray-300  rounded-md cursor-pointer'
+const Active = 'w-[46px] h-[48px] flex justify-center items-center bg-[#E13427] hover:bg-gray-300 text-white rounded-md cursor-pointer '
 
 const PageNumber = ({ text, currentPage, icon, setCurrentPage, type }) => {
     const navigate = useNavigate()
@@ -41,7 +39,7 @@ const PageNumber = ({ text, currentPage, icon, setCurrentPage, type }) => {
     }
     return (
         <div
-            className={+text === +currentPage ? `${active} ${text === '...' ? 'cursor-text' : 'cursor-pointer'}` : `${notActive} ${text === '...' ? 'cursor-text' : 'cursor-pointer'}`}
+            className={+text === +currentPage ? `${Active} ${text === '...' ? 'cursor-text' : 'cursor-pointer'}` : `${notActive} ${text === '...' ? 'cursor-text' : 'cursor-pointer'}`}
             onClick={handleChangePage}
         >
             {icon || text}

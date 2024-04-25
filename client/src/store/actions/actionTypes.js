@@ -6,7 +6,9 @@ const actionTypes = {
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     LOGIN_FAIL: 'LOGIN_FAIL',
 
-    GET_POST: "GET_POST"
+    GET_POSTS: "GET_POST",
+    GET_POSTS_LIMIT: "GET_POSTS_LIMIT",
+    GET_NEW_POST: "GET_NEW_POST"
 }
 
 export default actionTypes

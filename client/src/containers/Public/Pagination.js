@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { PageNumber } from '../../components'
-import { useSelector } from 'react-redux'
+import React, {useEffect, useState} from 'react'
+import { PageNumber} from '../../components'
+import {useSelector} from 'react-redux'
 import icons from '../../ultils/icons'
 import { useSearchParams } from 'react-router-dom'
 
-//Huyền cop hết cả file này từ file gốc rồi, đừng có sửa gì file này hết
-const { GrLinkNext } = icons
+const {GrLinkNext} = icons
 
-const Pagination = () => {
+const Pagination = ({number}) => {
     const { count, posts } = useSelector(state => state.post)
     const [arrPage, setArrPage] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -21,7 +20,7 @@ const Pagination = () => {
         !page && setCurrentPage(1)
     }, [searchParams])
     useEffect(() => {
-        let maxPage = Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS)
+        let maxPage = Math.ceil(count / posts.length)
         let end = (currentPage + 2) > maxPage ? maxPage : (currentPage + 2)
         let start = (currentPage - 2) <= 1 ? 1 : (currentPage - 2)
         let temp = []
@@ -32,24 +31,26 @@ const Pagination = () => {
         // 3 => 1 2 3 (1 ... 2 3)
 
     }, [count, posts, currentPage])
-    return (
-        <div className='flex items-center justify-center gap-2 py-5'>
-            {!isHideStart && <PageNumber setCurrentPage={setCurrentPage} text={1} />}
-            {(!isHideStart && currentPage !== 4) && <PageNumber text={'...'} />}
-            {arrPage.length > 0 && arrPage.map(item => {
-                return (
-                    <PageNumber
-                        key={item}
-                        text={item}
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                    />
-                )
-            })}
-            {!isHideEnd && <PageNumber text={'...'} />}
-            {!isHideEnd && <PageNumber icon={<GrLinkNext />} setCurrentPage={setCurrentPage} text={Math.floor(count / posts.length)} />}
-        </div>
-    )
+
+
+  return (
+    <div className='flex items-center justify-center gap-2 py-5'>
+    {!isHideStart && <PageNumber setCurrentPage={setCurrentPage} text={1} />}
+    {(!isHideStart && currentPage !== 4) && <PageNumber text={'...'} />}
+    {arrPage.length > 0 && arrPage.map(item => {
+        return (
+            <PageNumber
+                key={item}
+                text={item}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+            />
+        )
+    })}
+    {!isHideEnd && <PageNumber text={'...'} />}
+    {!isHideEnd && <PageNumber icon={<GrLinkNext />} setCurrentPage={setCurrentPage} text={Math.floor(count / posts.length)} />}
+</div>
+  )
 }
 
 export default Pagination
