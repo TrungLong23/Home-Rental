@@ -22,7 +22,12 @@ module.exports = {
       },
       cursor: {
         pointer: 'pointer'
-      }
+      },
+      flex: {
+        '3': '3 3 0%' ,
+        '2': '2 2 0%' 
+      } 
+
     },
   },
   plugins: [],
