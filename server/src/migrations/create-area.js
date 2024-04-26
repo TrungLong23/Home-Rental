@@ -8,9 +8,9 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 autoIncrement: true
             },
-            order: {
-                type: Sequelize.INTEGER
-            },
+            // order: {
+            //     type: Sequelize.INTEGER
+            // },
             code: {
                 type: Sequelize.STRING
             },

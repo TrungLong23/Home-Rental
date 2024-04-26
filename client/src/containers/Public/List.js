@@ -4,14 +4,16 @@ import { getPosts, getPostsLimit } from "../../store/actions/post";
 import { useDispatch, useSelector } from "react-redux";
 import { Pagination, } from "./index"
 
-const List = () => {
+const List = ({ page }) => {
   const dispatch = useDispatch();
-  const { posts, count } = useSelector((state) => state.post);
+  const { posts } = useSelector((state) => state.post);
+  
   useEffect(() => {
-    dispatch(getPostsLimit(0));
-  }, []);
+    let offset = page ? +page - 1 : 0
+    dispatch(getPostsLimit(offset));
+  }, [page]);
   return (
-    <div className="w-full p-2 bg-white shadow-md rounded-md px-6">
+    <div  className="w-full p-2 bg-white shadow-md rounded-md px-6">
       <div className="flex items-center justify-between my-3">
         <h4 className="text-xl font-semibold">Danh sáng tin đăng</h4>
         <span>Cập nhật: 24/04/2024</span>
@@ -34,6 +36,7 @@ const List = () => {
                 star={+item?.star}
                 title={item?.title}
                 user={item?.user}
+                id={item?.id}
               />
             );
           })}

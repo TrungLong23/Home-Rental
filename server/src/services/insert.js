@@ -8,8 +8,11 @@ import chothuephongtro from'../../data/chothuephongtro.json'
 import nhachothue from '../../data/nhachothue.json'
 import generateCode from '../ultis/generateCode'
 import { where } from 'sequelize'
+import { dataPrice, dataArea } from '../ultis/data'
+import { getNumberFromString } from '../ultis/common'
 require('dotenv').config()
 const dataBody = chothuephongtro.body
+
 
 const hashPassword = password => bcrypt.hashSync(password, bcrypt.genSaltSync(12))
 
@@ -23,6 +26,8 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 let imagesId = v4()
                 let desc = JSON.stringify(item?.mainContent?.content)
                 let overviewId = v4()
+                let currentArea = getNumberFromString(item?.header?.attributes?.acreage)
+                let currentPrice = getNumberFromString(item?.header?.attributes?.price)
                 await db.Post.create({
                     id: postId,
                     title: item?.header?.title,
@@ -35,13 +40,13 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                     userId,
                     overviewId,
                     imagesId,
-                    // areaCode: dataArea.find(area => area.max > currentArea && area.min <= currentArea)?.code,
-                    // priceCode: dataPrice.find(area => area.max > currentPrice && area.min <= currentPrice)?.code,
+                    areaCode: dataArea.find(area => area.max > currentArea && area.min <= currentArea)?.code,
+                    priceCode: dataPrice.find(area => area.max > currentPrice && area.min <= currentPrice)?.code,
                     // provinceCode,
                     // priceNumber: getNumberFromStringV2(item?.header?.attributes?.price),
                     // areaNumber: getNumberFromStringV2(item?.header?.attributes?.acreage)
                 })
-                  await db.Attribute.create({
+                await db.Attribute.create({
                     id: attributesId,
                     price: item?.header?.attributes?.price,
                     acreage:item?.header?.attributes?.acreage,

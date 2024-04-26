@@ -4,12 +4,12 @@ import {useSelector} from 'react-redux'
 import icons from '../../ultils/icons'
 import { useSearchParams } from 'react-router-dom'
 
-const {GrLinkNext} = icons
+const {GrLinkNext , GrLinkPrevious} = icons
 
-const Pagination = ({number}) => {
+const Pagination = ({ page }) => {
     const { count, posts } = useSelector(state => state.post)
     const [arrPage, setArrPage] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(+page || 1)
     const [isHideEnd, setIsHideEnd] = useState(false)
     const [isHideStart, setIsHideStart] = useState(false)
     const [searchParams] = useSearchParams()

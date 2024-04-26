@@ -63,7 +63,7 @@ const Item = ({ images, user, title, star, description, attributes, address, id 
                 </p>
                 <div className='flex items-center my-5 justify-between'>
                     <div className=' flex items-center'>
-                        <img src="https://lnsel.com/wp-content/uploads/2018/12/anon-avatar-300x300.png" alt="avatar" className='w-[30px] h-[30px] object-cover rounded-full' />
+                        <img src="https://th.bing.com/th/id/OIP.GuJ8WwCkSIufe12wtOlWcAAAAA?rs=1&pid=ImgDetMain"  alt="avatar" className='w-[25px] h-[25px] mr-2 object-cover rounded-full' />
                         <p>{user?.name}</p>
                     </div>
                     <div className='flex items-center gap-1'>
