@@ -10,8 +10,8 @@ const List = ({ page }) => {
   
   useEffect(() => {
     let offset = page ? +page - 1 : 0
-    dispatch(getPostsLimit(offset));
-  }, [page]);
+    dispatch(getPostsLimit({ offset }))
+  }, [page])
   return (
     <div  className="w-full p-2 bg-white shadow-md rounded-md px-6">
       <div className="flex items-center justify-between my-3">
