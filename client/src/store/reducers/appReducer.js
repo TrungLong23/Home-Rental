@@ -1,8 +1,8 @@
 import actionTypes from "../actions/actionTypes";
 const initState = {
     msg: '',
-    categories: []
-  
+    categories: [],
+    prices: [],
 }
 
 const appReducer = (state = initState, action) => {
@@ -10,11 +10,27 @@ const appReducer = (state = initState, action) => {
         case actionTypes.GET_CATEGORIES:
             return {
                 ...state,
-                categories: action.categories  || [],
+                categories: action.categories || [],
                 msg: action.msg || '',
-              
             }
-       
+        case actionTypes.GET_PRICES:
+            return {
+                ...state,
+                prices: action.prices || [],
+                msg: action.msg || '',
+            }
+        case actionTypes.GET_AREAS:
+            return {
+                ...state,
+                areas: action.areas || [],
+                msg: action.msg || '',
+            }
+        // case actionTypes.GET_PROVINCES:
+        //     return {
+        //         ...state,
+        //         provinces: action.provinces || [],
+        //         msg: action.msg || '',
+        //     }
         default:
             return state;
     }
