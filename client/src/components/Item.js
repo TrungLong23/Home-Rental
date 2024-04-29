@@ -75,7 +75,7 @@ const Item = ({ images, user, title, star, description, attributes, address, id 
                         </button>
                         <button
                             type='button'
-                            className='text-blue-700 px-1 rounded-md border border-blue-700'
+                            className='text-blue-700 p-1 rounded-md border border-blue-700'
                         >
                             Nhắn zalo
                         </button>

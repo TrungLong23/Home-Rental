@@ -26,3 +26,6 @@ npm i redux-thunk (client)
 
 #14 15
 npm i sweetalert2 (client)
+
+#34 
+npm i moment (client)
