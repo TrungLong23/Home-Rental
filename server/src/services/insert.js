@@ -11,7 +11,7 @@ import { where } from 'sequelize'
 import { dataPrice, dataArea } from '../ultis/data'
 import { getNumberFromString } from '../ultis/common'
 require('dotenv').config()
-const dataBody = chothuephongtro.body
+const dataBody = chothuecanho.body
 
 
 const hashPassword = password => bcrypt.hashSync(password, bcrypt.genSaltSync(12))

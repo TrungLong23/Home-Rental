@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes'
-import { apiGetNewPosts, apiGetPosts, apiGetPostsLimit } from '../../services/post'
+import {  apiGetPosts, apiGetPostsLimit } from '../../services/post'
 
 export const getPosts = () => async (dispatch) => {
     try {
@@ -24,7 +24,7 @@ export const getPosts = () => async (dispatch) => {
     }
 }
 export const getPostsLimit = (query) => async (dispatch) => {
-  console.log(query)
+    console.log(query)
     try {
         const response = await apiGetPostsLimit(query)
         if (response?.data.err === 0) {
