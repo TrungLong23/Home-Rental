@@ -1,31 +1,58 @@
-
 import db from '../models'
 import bcrypt from 'bcryptjs'
 import { v4 } from 'uuid'
-import chothuecanho from '../../data/chothuecanho.json'
 import chothuematbang from '../../data/chothuematbang.json'
-import chothuephongtro from'../../data/chothuephongtro.json'
+import chothuecanho from '../../data/chothuecanho.json'
 import nhachothue from '../../data/nhachothue.json'
+import chothuephongtro from '../../data/chothuephongtro.json'
 import generateCode from '../ultis/generateCode'
-import { where } from 'sequelize'
 import { dataPrice, dataArea } from '../ultis/data'
-import { getNumberFromString } from '../ultis/common'
+import { getNumberFromString, getNumberFromStringV2 } from '../ultis/common'
 require('dotenv').config()
-const dataBody = nhachothue.body
+const dataBody = [
+    {
+        body: chothuephongtro.body,
+        code: 'CTPT'
+    },
+    {
+        body: chothuematbang.body,
+        code: 'CTMB'
+    },
+    {
+        body: chothuecanho.body,
+        code: 'CTCH'
+    },
+    {
+        body: nhachothue.body,
+        code: 'NCT'
+    },
+]
 
 
 const hashPassword = password => bcrypt.hashSync(password, bcrypt.genSaltSync(12))
 
 export const insertService = () => new Promise(async (resolve, reject) => {
     try {
-            dataBody.forEach(async (item) => {
+        const provinceCodes = []
+        const labelCodes = []
+        dataBody.forEach(cate => {
+            cate.body.forEach(async (item) => {
                 let postId = v4()
-                let labelCode = generateCode(item?.header?.class?.classType)
+                let labelCode = generateCode(item?.header?.class?.classType).trim()
+                labelCodes?.every(item => item?.code !== labelCode) && labelCodes.push({
+                    code: labelCode,
+                    value: item?.header?.class?.classType?.trim()
+                })
+                let provinceCode = generateCode(item?.header?.address?.split(',')?.slice(-1)[0]).trim()
+                provinceCodes?.every(item => item?.code !== provinceCode) && provinceCodes.push({
+                    code: provinceCode,
+                    value: item?.header?.address?.split(',')?.slice(-1)[0].trim()
+                })
                 let attributesId = v4()
                 let userId = v4()
                 let imagesId = v4()
-                let desc = JSON.stringify(item?.mainContent?.content)
                 let overviewId = v4()
+                let desc = JSON.stringify(item?.mainContent?.content)
                 let currentArea = getNumberFromString(item?.header?.attributes?.acreage)
                 let currentPrice = getNumberFromString(item?.header?.attributes?.price)
                 await db.Post.create({
@@ -35,37 +62,28 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                     labelCode,
                     address: item?.header?.address,
                     attributesId,
-                    categoryCode: 'NCT',
+                    categoryCode: cate.code,
                     description: desc,
                     userId,
                     overviewId,
                     imagesId,
                     areaCode: dataArea.find(area => area.max > currentArea && area.min <= currentArea)?.code,
                     priceCode: dataPrice.find(area => area.max > currentPrice && area.min <= currentPrice)?.code,
-                    // provinceCode,
-                    // priceNumber: getNumberFromStringV2(item?.header?.attributes?.price),
-                    // areaNumber: getNumberFromStringV2(item?.header?.attributes?.acreage)
+                    provinceCode,
+                    priceNumber: getNumberFromStringV2(item?.header?.attributes?.price),
+                    areaNumber: getNumberFromStringV2(item?.header?.attributes?.acreage)
                 })
                 await db.Attribute.create({
                     id: attributesId,
                     price: item?.header?.attributes?.price,
-                    acreage:item?.header?.attributes?.acreage,
+                    acreage: item?.header?.attributes?.acreage,
                     published: item?.header?.attributes?.published,
                     hashtag: item?.header?.attributes?.hashtag,
-                    })
+                })
                 await db.Image.create({
                     id: imagesId,
                     image: JSON.stringify(item?.images)
                 })
-                await db.Label.findOrCreate(
-                    {
-                        where : {code: labelCode},
-                        defaults: {
-                            code: labelCode,
-                            value: item?.header?.class?.classType
-                        }
-                    }
-                )
                 await db.Overview.create({
                     id: overviewId,
                     code: item?.overview?.content.find(i => i.name === "Mã tin:")?.content,
@@ -84,7 +102,14 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                     zalo: item?.contact?.content.find(i => i.name === "Zalo")?.content,
                 })
             })
-        
+        })
+        // console.log(provinceCodes);
+        provinceCodes?.forEach(async (item) => {
+            await db.Province.create(item)
+        })
+        labelCodes?.forEach(async (item) => {
+            await db.Label.create(item)
+        })
 
 
         resolve('Done.')

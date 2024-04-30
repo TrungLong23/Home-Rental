@@ -12,7 +12,7 @@ const actionTypes = {
 
     GET_CATEGORIES: 'GET_CATEGORIES',
     GET_PRICES: 'GET_PRICES',
-
+    GET_PROVINCES: 'GET_PROVINCES',
     GET_AREAS: 'GET_AREAS'
 }
 
