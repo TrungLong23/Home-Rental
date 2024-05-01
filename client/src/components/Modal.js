@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import icons from "../ultils/icons";
+import { getNumbersPrice, getNumbersArea } from '../ultils/Common/getNumbers'
+import { getCodes,getCodesArea } from "../ultils/Common/getCodes";
 
 const { GrLinkPrevious } = icons;
 
-const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax, defaultText }) => {
+const Modal = ({ setIsShowModal, content, name, handleSubmit,code, queries, arrMinMax, defaultText }) => {
 
-    const [persent1, setPersent1] = useState(0)
-    const [persent2, setPersent2] = useState(100)
-    const [activedEl, setActivedEl] = useState('')
+  const [persent1, setPersent1] = useState(name === 'price' && arrMinMax?.priceArr
+  ? arrMinMax?.priceArr[0]
+  : name === 'area' && arrMinMax?.areaArr ? arrMinMax?.areaArr[0] : 0)
+const [persent2, setPersent2] = useState(name === 'price' && arrMinMax?.priceArr
+  ? arrMinMax?.priceArr[1]
+  : name === 'area' && arrMinMax?.areaArr ? arrMinMax?.areaArr[1] : 100)
+const [activedEl, setActivedEl] = useState('')
 
 
   useEffect(() => {
@@ -45,8 +51,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
         let target = name === 'price' ? 15 : name === 'area' ? 90 : 1
         return Math.floor((percent / target) * 100)
     }
-    const getNumbersPrice = (string) =>  string.split(' ').map(item => +item).filter(item => !item === false)
-    const getNumbersArea = (string) =>  string.split(' ').map(item => +item.match(/\d+/)).filter(item => item !== 0)
+   
     const handleActive = (code, value) => {
         setActivedEl(code)
         let arrMaxMin = name === 'price' ? getNumbersPrice(value) : getNumbersArea(value)
@@ -69,20 +74,17 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
             setPersent1(convertto100(arrMaxMin[0]))
             setPersent2(convertto100(arrMaxMin[1]))
         }
-    }
+      }
     const handleBeforeSubmit = (e) => {
-        let min = persent1 <= persent2 ? persent1 : persent2
-        let max = persent1 <= persent2 ? persent2 : persent1
-        let arrMinMax = [convert100toTarget(min), convert100toTarget(max)]
-        // const gaps = name === 'price'
-        //     ? getCodes(arrMinMax, content)
-        //     : name === 'area' ? getCodesArea(arrMinMax, content) : []
-        // handleSubmit(e, {
-        //     [`${name}Number`]: arrMinMax,
-        //     [name]: `Từ ${convert100toTarget(min)} - ${convert100toTarget(max)} ${name === 'price' ? 'triệu' : 'm2'}`
-        // }, {
-        //     [`${name}Arr`]: [min, max]
-        // })
+      const gaps = name ==='price'
+        ? getCodes([convert100toTarget(persent1), convert100toTarget(persent2)], content)
+        : name === 'area' ? getCodesArea([convert100toTarget(persent1), convert100toTarget(persent2)], content) : []
+      handleSubmit(e, {
+        [`${name}Code`]: gaps?.map(item => item.code),
+        [name]: `Từ ${convert100toTarget(persent1)} - ${convert100toTarget(persent2)} ${name === 'price' ? 'triệu' : 'm2'}`
+      },{
+        [`${name}Arr`]: [persent1, persent2]
+      })      
     }
   return (
     <div
@@ -133,6 +135,8 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                     name={name}
                     id={item.code}
                     value={item.code}
+                     checked={item.code === queries[`${name}Code`] ? true : false}
+                    onClick={(e) => handleSubmit(e, { [name]: item.value, [`${name}Code`]: item.code})}
                     // checked={item.code === queries[`${name}Code`] ? true : false}
                     // onChange={(e) => handleSubmit(e, { [name]: item.value, [`${name}Code`]: item.code })}
                   />
@@ -233,6 +237,10 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
           {(name === 'price' || name === 'area') && <button
                 type='button'
                 className='w-full bottom-0 bg-[#FFA500] py-2 font-medium rounded-bl-md rounded-br-md'
+                // onClick={(e) => handleSubmit(e, {
+                //   [`${name}Code`]: [convert100toTarget(persent1), convert100toTarget(persent2)],
+                //   [name]: `Từ ${convert100toTarget(persent1)} - ${convert100toTarget(persent2)} triệu`
+                // })}
                 onClick={handleBeforeSubmit}
             >
                 ÁP DỤNG
@@ -242,4 +250,4 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
   );
 };
 
-export default Modal;
+export default memo(Modal)
