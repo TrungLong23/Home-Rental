@@ -75,16 +75,19 @@ const [activedEl, setActivedEl] = useState('')
             setPersent2(convertto100(arrMaxMin[1]))
         }
       }
-    const handleBeforeSubmit = (e) => {
-      const gaps = name ==='price'
-        ? getCodes([convert100toTarget(persent1), convert100toTarget(persent2)], content)
-        : name === 'area' ? getCodesArea([convert100toTarget(persent1), convert100toTarget(persent2)], content) : []
-      handleSubmit(e, {
-        [`${name}Code`]: gaps?.map(item => item.code),
-        [name]: `Từ ${convert100toTarget(persent1)} - ${convert100toTarget(persent2)} ${name === 'price' ? 'triệu' : 'm2'}`
-      },{
-        [`${name}Arr`]: [persent1, persent2]
-      })      
+      const handleBeforeSubmit = (e) => {
+        let min = persent1 <= persent2 ? persent1 : persent2
+        let max = persent1 <= persent2 ? persent2 : persent1
+        let arrMinMax = [convert100toTarget(min), convert100toTarget(max)]
+        // const gaps = name === 'price'
+        // ? getCodes(arrMinMax, content)
+        // : name === 'area' ? getCodesArea(arrMinMax, content) : []
+        handleSubmit(e, {
+            [`${name}Number`]: arrMinMax,
+            [name]: `Từ ${convert100toTarget(min)} - ${convert100toTarget(max)} ${name === 'price' ? 'triệu' : 'm2'}`
+        }, {
+            [`${name}Arr`]: [min, max]
+        })
     }
   return (
     <div
@@ -98,9 +101,9 @@ const [activedEl, setActivedEl] = useState('')
           e.stopPropagation();
           setIsShowModal(true);
         }}
-        className="w-1/3 bg-white rounded-md"
+        className='w-2/5 h-[500px] bg-white rounded-md relative'
       >
-        <div className="h-[45px] px-4 flex items-center border-b border-gray-100">
+        <div className='h-[45px] px-4 flex items-center border-b border-gray-200'>
           <span
             className="cursor-pointer"
             onClick={(e) => {
@@ -111,9 +114,8 @@ const [activedEl, setActivedEl] = useState('')
             <GrLinkPrevious size={24} />
           </span>
         </div>
-        {(name === "category" || name === "province") && (
-          <div className="p-4 flex flex-col">
-            {/* <span className='py-2 flex gap-2 items-center border-b border-gray-200'>
+        {(name === "category" || name === "province") && (<div className="p-4 flex flex-col">
+            <span className='py-2 flex gap-2 items-center border-b border-gray-200'>
                         <input
                             type="radio"
                             name={name}
@@ -123,7 +125,7 @@ const [activedEl, setActivedEl] = useState('')
                             onChange={(e) => handleSubmit(e, { [name]: defaultText, [`${name}Code`]: null })}
                         />
                         <label htmlFor='default'>{defaultText}</label>
-                    </span> */}
+                    </span>
             {content?.map((item) => {
               return (
                 <span
@@ -236,7 +238,7 @@ const [activedEl, setActivedEl] = useState('')
         )}
           {(name === 'price' || name === 'area') && <button
                 type='button'
-                className='w-full bottom-0 bg-[#FFA500] py-2 font-medium rounded-bl-md rounded-br-md'
+                className='w-full absolute bottom-0 bg-[#FFA500] py-2 font-medium rounded-bl-md rounded-br-md'
                 // onClick={(e) => handleSubmit(e, {
                 //   [`${name}Code`]: [convert100toTarget(persent1), convert100toTarget(persent2)],
                 //   [name]: `Từ ${convert100toTarget(persent1)} - ${convert100toTarget(persent2)} triệu`
