@@ -29,3 +29,6 @@ npm i sweetalert2 (client)
 
 #34 
 npm i moment (client)
+
+#64
+npm i react-loader-spinner (client)
