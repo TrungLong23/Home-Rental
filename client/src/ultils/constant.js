@@ -8,7 +8,8 @@ export const path = {
     CHO_THUE_PHONG_TRO: 'cho-thue-phong-tro',
     DETAI_POST__TITLE__POSID: 'chi-tiet/:title/:postId ',
     SEARCH: 'tim-kiem',
-    
+    SYSTEM: '/he-thong/*',
+    CREATE_POST: 'tao-moi-bai-dang'
 }
 
 export const text = {
