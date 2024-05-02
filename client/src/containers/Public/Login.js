@@ -80,7 +80,8 @@ useEffect(() => {
 }
  
   return (
-    <div className='bg-white w-[600px] p-[30px] pb-[100px] rounded-md shadow-md'>
+  <div className='w-full flex items-center justify-center'>
+      <div className='bg-white w-[600px] p-[30px] pb-[100px] rounded-md shadow-md'>
       <h3 className='font-semibold text-3xl mb-3'>{isRegister ? 'Đăng kí tài khoản' : 'Đăng nhập'}</h3>
       <div className='w-full flex flex-col gap-5'>
         {isRegister && <InputForm 
@@ -146,6 +147,7 @@ useEffect(() => {
         </>}
       </div>
     </div>
+  </div>
   )
 }
 

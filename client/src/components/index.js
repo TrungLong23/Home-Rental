@@ -11,5 +11,6 @@ export { default as Contact } from './Contact'
 export { default as RelatedPost } from './RelatedPost'
 export { default as Sitem } from './Sitem'
 export { default as Modal } from './Modal'
+export { default as User } from './User'
 
 
