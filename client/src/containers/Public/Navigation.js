@@ -6,7 +6,7 @@ import * as actions from '../../store/actions'
 
 
 const notActive = 'hover:bg-secondary2 px-4 h-full flex items-center bg-secondary'
-const active = 'hover:bg-secondary2 px-4 h-full flex items-center  bg-secondary2'
+const active = 'hover:bg-secondary2 px-4 h-full flex items-center  bg-secondary'
 
 const Navigation = ({ isAdmin }) => {
 
@@ -16,7 +16,7 @@ const Navigation = ({ isAdmin }) => {
         dispatch(actions.getCategories())
     }, [])
     return (
-        <div className={`w-full flex ${isAdmin ? 'justify-start' : 'justify-center'} items-center h-[40px] bg-secondary1 text-white`}>
+        <div className={`w-full flex ${isAdmin ? 'justify-start' : 'justify-center'} items-center h-[40px] bg-secondary text-white`}>
             <div className='w-4/5 flex h-full items-center text-sm font-medium'>
                 <NavLink
                     to={`/`}
