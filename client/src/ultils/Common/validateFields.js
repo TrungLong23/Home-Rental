@@ -33,22 +33,22 @@ const validate = (payload , setInvalidFields) => {
                 }
                 break
                 case 'priceNumber':
-                //     case 'areaNumber': 
-                // if (+item[1] === 0) {
-                //     setInvalidFields(prev => [...prev, {
-                //         name: item[0],
-                //         message: 'Chưa đặt giá trị cho trường này.'
-                //     }])
-                //     invalids++
-                // }
-                // if (+item[1] === NaN) {
-                //     setInvalidFields(prev => [...prev, {
-                //         name: item[0],
-                //         message: 'Trường này phải là số.'
-                //     }])
-                //     invalids++
-                // }
-                // break
+                    case 'areaNumber': 
+                if (+item[1] === 0) {
+                    setInvalidFields(prev => [...prev, {
+                        name: item[0],
+                        message: 'Chưa đặt giá trị cho trường này.'
+                    }])
+                    invalids++
+                }
+                if (!+item[1] ) {
+                    setInvalidFields(prev => [...prev, {
+                        name: item[0],
+                        message: 'Trường này phải là số.'
+                    }])
+                    invalids++
+                }
+                break
 
             default:
                 break;
