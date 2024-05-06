@@ -4,6 +4,7 @@ const initState = {
     categories: [],
     prices: [],
     provinces: [],
+ 
 }
 
 const appReducer = (state = initState, action) => {
@@ -32,6 +33,7 @@ const appReducer = (state = initState, action) => {
                 provinces: action.provinces || [],
                 msg: action.msg || '',
             }
+       
         default:
             return state;
     }
