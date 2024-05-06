@@ -8,7 +8,6 @@ const ManagePost = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false)
   const { PostOfCurrent } = useSelector((state) => state.post)
-  const [dataEdit, setDataEdit]  = useState({})
   useEffect(() => {
     dispatch(actions.getPostsLimitAdmin());
   }, []);
@@ -82,7 +81,7 @@ const ManagePost = () => {
                         bgColor="bg-green-600"
                         textColor="text-white"
                         onClick={() => {
-                            setDataEdit(item)
+                            dispatch(actions.editData(item))
                             setIsEdit(true)
                         }}
                         />
@@ -98,7 +97,7 @@ const ManagePost = () => {
             )}
             </tbody>
         </table>
-        {isEdit && <UpdatePost dataEdit={dataEdit} setIsEdit={setIsEdit}/>}
+        {isEdit && <UpdatePost setIsEdit={setIsEdit}/>}
     </div>
   );
 };

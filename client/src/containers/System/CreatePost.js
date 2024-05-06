@@ -10,9 +10,9 @@ import validate from '../../ultils/Common/validateFields'
 
 const { BsCameraFill, ImBin } = icons
 
-const CreatePost = ({isEdit, dataEdit}) => {
+const CreatePost = ({isEdit}) => {
 
-    console.log(dataEdit)
+    const {dataEdit} = useSelector(state => state.post)
 
     const [payload, setPayload] = useState(() => {
       const initData = {
