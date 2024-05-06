@@ -104,7 +104,7 @@ export const createNewPostService = (body, userId) => new Promise(async (resolve
             areaCode: body.areaCode || null,
             priceCode: body.priceCode || null,
             provinceCode: body?.province?.includes('Thành phố') ? generateCode(body?.province?.replace('Thành phố ', '')) : generateCode(body?.province?.replace('Tỉnh ', '')) || null,
-            priceNumber: body.priceCode,
+            priceNumber: body.priceNumber,
             areaNumber: body.areaNumber
         });
         await db.Attribute.create({
@@ -175,7 +175,7 @@ export const getPostsLimitAdminService = (page, id ,query) => new Promise(async 
                 { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] },
                 { model: db.Overview, as: 'overviews' },
             ],
-            attributes: ['id', 'title', 'star', 'address', 'description']
+            // attributes: ['id', 'title', 'star', 'address', 'description']
         });
         resolve({
             err: response ? 0 : 1,
