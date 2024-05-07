@@ -7,10 +7,14 @@ import { Button, UpdatePost } from "../../components/";
 const ManagePost = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false)
-  const { PostOfCurrent } = useSelector((state) => state.post)
+  const { PostOfCurrent, dataEdit } = useSelector((state) => state.post)
   useEffect(() => {
     dispatch(actions.getPostsLimitAdmin());
   }, []);
+
+  useEffect(() => {
+    !dataEdit && setIsEdit(false);
+  }, [dataEdit]);
 
   const checkStatus = (dateString) =>
     moment(dateString, process.env.REACT_APP_FORMAT_DATE).isSameOrAfter(

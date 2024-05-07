@@ -12,16 +12,20 @@ const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
     const [reset, setReset] = useState(false)
 
     useEffect(() => {
+       if(dataEdit){
         let addressArr = dataEdit?.address?.split(',')
-        let foundProvince = provinces.length > 0 && provinces?.find(item => item.province_name === addressArr[addressArr.length -1]?.trim())
+        let foundProvince = provinces?.length && provinces?.find(item => item.province_name === addressArr[addressArr?.length - 1]?.trim())
         setProvince(foundProvince ? foundProvince.province_id: '')
-    }, [provinces])
+       }
+    }, [provinces, dataEdit])
 
     useEffect(() => {
+       if(dataEdit){
         let addressArr = dataEdit?.address?.split(',')
-        let foundDistrict = districts.length > 0 && districts?.find(item => item.district_name === addressArr[addressArr.length -2]?.trim())
+        let foundDistrict = districts?.length > 0 && districts?.find(item => item.district_name === addressArr[addressArr.length -2]?.trim())
         setDistrict(foundDistrict ? foundDistrict.district_id: '')
-    }, [districts])
+       }
+    }, [districts, dataEdit])
 
     useEffect(() => {
         const fetchPublicProvince = async () => {
