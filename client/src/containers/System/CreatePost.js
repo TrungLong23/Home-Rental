@@ -37,9 +37,9 @@ const CreatePost = ({isEdit}) => {
     const {currentData} = useSelector(state => state.user)
     const [invalidFields, setInvalidFields ] = useState([])
 
-    useEffect (()=> {
-        if(dataEdit) {
-            let images =  JSON.parse(dataEdit?.images?.image) 
+    useEffect (() => {
+        if(Object.keys(dataEdit).length > 0) {
+            let images =  dataEdit?.images?.image ? JSON.parse(dataEdit?.images?.image) : ''
             images && setImagesPreview(images)
         }
     },[dataEdit])

@@ -14,8 +14,8 @@ const ManagePost = () => {
   const [status, setStatus] = useState('0')
 
   useEffect(() => {
-    !dataEdit && dispatch(actions.getPostsLimitAdmin());
-  }, [dataEdit,updateData]);
+    dataEdit && dispatch(actions.getPostsLimitAdmin());
+  }, [dataEdit, updateData]);
 
   useEffect(() => {
     setPosts(PostOfCurrent)
