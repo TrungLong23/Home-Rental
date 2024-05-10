@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.use(verifyToken)
 router.get('/get-current', userController.getCurrent)
+router.put('/', userController.getCurrent)
 
 
 export default router

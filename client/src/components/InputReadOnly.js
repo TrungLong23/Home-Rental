@@ -21,3 +21,4 @@ const InputReadOnly = ({ label, value,direction,editPhone }) => {
 }
 
 export default InputReadOnly
+
