@@ -37,7 +37,7 @@ const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
         !province && setDistricts([])
     }, [province])
     useEffect(() => {
-        if(Object.keys(dataEdit).length > 0){
+        if(dataEdit){
          let addressArr = dataEdit?.address?.split(',')
          let foundProvince = provinces?.length && provinces?.find(item => item.province_name === addressArr[addressArr?.length - 1]?.trim())
          setProvince(foundProvince ? foundProvince.province_id : '')
@@ -45,7 +45,7 @@ const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
      }, [provinces, dataEdit])
  
      useEffect(() => {
-        if(Object.keys(dataEdit).length > 0){
+        if(dataEdit){
          let addressArr = dataEdit?.address?.split(',')
          let foundDistrict = districts?.length > 0 && districts?.find(item => item.district_name === addressArr[addressArr.length -2]?.trim())
          setDistrict(foundDistrict ? foundDistrict.district_id: '')
